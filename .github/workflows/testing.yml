@@ -3,6 +3,11 @@ on:
   push:
     branches:
     - master
+    paths:
+    - ".github/workflows/lint.yml"
+    - "**.swift"
+    - '.swiftlint.yml'
+    - '.swiftformat'
 jobs:
   test:
     name: Testing Swift Package and iOS app
@@ -10,9 +15,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
-      - name: Force XCode 11.3
-        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
-      - name: Testing Swift package
-        run: exec ./.github/scripts/test_swift_package.sh
-      - name: Testing iOS app
-        run: exec ./.github/scripts/test_app.sh
+        with:
+          ref: ${{ github.head_ref }}
+          
+      - name: Install SwiftFormat
+        run: brew install swiftformat
+
+      - name: Format Swift code
+        run: swiftformat --verbose .
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply SwiftFormat changes
+          
+  lint:
+    name: SwiftLint
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
+        env:
+          DIFF_BASE: ${{ github.base_ref }} # only files changed in the PR 
+      
