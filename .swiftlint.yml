@@ -30,6 +30,7 @@ disabled_rules:
   - function_parameter_count
   - cyclomatic_complexity
   - large_tuple
+  - type_name
 line_length: 200
 type_body_length:
   - 300
