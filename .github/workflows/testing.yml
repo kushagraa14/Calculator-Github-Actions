@@ -19,10 +19,6 @@ jobs:
 
       - name: Format Swift code
         run: swiftformat --verbose .
-
-      - uses: kushagraa14/git-auto-commit-action@v4
-        with:
-          commit_message: Apply SwiftFormat changes
           
   lint:
     name: SwiftLint
