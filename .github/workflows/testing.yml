@@ -31,5 +31,15 @@ jobs:
 
       - name: SwiftLint
         uses: norio-nomura/action-swiftlint@3.2.1
+        
+  code-coverage:
+    runs-on: macOS-latest
+    steps:
+      - name: Test
+        uses: actions/checkout@v1
+      - name: Build and Test
+        run:  xcodebuild test -project Calculator iOS.xcodeproj -scheme CodecovDemo -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' -enableCodeCoverage YES build test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.2.1
 
       
