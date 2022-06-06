@@ -1,0 +1,16 @@
+name: Swiftlint
+
+on: [push, pull_request]
+
+jobs:
+  swiftlint:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v1
+
+      - name: GitHub Action for SwiftLint with --strict
+        uses: norio-nomura/action-swiftlint@3.1.0
+        with:
+          args: --strict
