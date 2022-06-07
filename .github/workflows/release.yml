@@ -30,17 +30,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create XCFramework
-        uses: nicoelayda/swift-create-xcframework@v2.1.1
+        uses: kushagraa14/swift-create-xcframework@v2.1.1
 
       - name: Rename files
         run: |
-          mv UIKitLivePreview.zip UIKitLivePreview.xcframework.zip
-          mv UIKitLivePreview.sha256 UIKitLivePreview.xcframework.sha256
+          mv Calculator.zip Calculator.xcframework.zip
+          mv Calculator.sha256 Calculator.xcframework.sha256
       - name: Upload XCFramework archive
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            UIKitLivePreview.xcframework.zip
-            UIKitLivePreview.xcframework.sha256
+            Calculator.xcframework.zip
+            Calculator.xcframework.sha256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
