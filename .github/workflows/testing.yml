@@ -35,11 +35,11 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           
-      - name: Install SwiftFormat
-        run: brew install swiftformat
+#       - name: Install SwiftFormat
+#         run: brew install swiftformat
 
-      - name: Format Swift code
-        run: swiftformat --verbose .
+#       - name: Format Swift code
+#         run: swiftformat --verbose .
           
   lint:
     name: SwiftLint
