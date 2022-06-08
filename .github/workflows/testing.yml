@@ -8,6 +8,9 @@ jobs:
   test:
     name: Testing Swift Package and iOS app
     runs-on: ubuntu-latest
+    env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.2.0
@@ -34,6 +37,14 @@ jobs:
           title: ${{ steps.semvers.outputs.patch }}
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          
+      - name: Slack Notification
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#testing'
+        if: always()
           
 #       - name: Install SwiftFormat
 #         run: brew install swiftformat
